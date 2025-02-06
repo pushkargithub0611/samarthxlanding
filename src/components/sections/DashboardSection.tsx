@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft, School, GraduationCap } from 'lucide-react';
 import { indiaGeoData } from '@/data/indiaGeoData';
 import type { SchoolData, RegionData } from '@/types/dashboard';
+import type { ChoroplethBoundFeature } from '@nivo/geo';
 
 interface FeatureProperties {
   id: string;
@@ -15,7 +16,7 @@ interface FeatureProperties {
   secondarySchools: number;
 }
 
-interface CustomFeature {
+interface CustomFeature extends ChoroplethBoundFeature {
   properties: FeatureProperties;
 }
 
@@ -104,21 +105,21 @@ const DashboardSection = () => {
                     ]
                   }
                 ]}
-                tooltip={({ feature }: { feature: CustomFeature }) => (
+                tooltip={({ feature }) => (
                   <div className="bg-white p-4 shadow-lg rounded-lg">
-                    <strong className="text-lg">{feature.properties.name}</strong>
+                    <strong className="text-lg">{(feature as CustomFeature).properties.name}</strong>
                     <div className="mt-2 space-y-1">
                       <div className="flex items-center gap-2">
                         <School className="h-4 w-4 text-blue-500" />
-                        <span>Total Schools: {feature.properties.totalSchools?.toLocaleString()}</span>
+                        <span>Total Schools: {(feature as CustomFeature).properties.totalSchools?.toLocaleString()}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <GraduationCap className="h-4 w-4 text-green-500" />
-                        <span>Primary: {feature.properties.primarySchools?.toLocaleString()}</span>
+                        <span>Primary: {(feature as CustomFeature).properties.primarySchools?.toLocaleString()}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <GraduationCap className="h-4 w-4 text-purple-500" />
-                        <span>Secondary: {feature.properties.secondarySchools?.toLocaleString()}</span>
+                        <span>Secondary: {(feature as CustomFeature).properties.secondarySchools?.toLocaleString()}</span>
                       </div>
                     </div>
                   </div>
