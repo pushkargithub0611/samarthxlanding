@@ -1,23 +1,11 @@
-import React, { useState } from 'react';
-import { feature } from 'topojson-client';
-import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
-import { indiaGeoData } from '@/data/indiaGeoData';
-import { ChoroplethMap } from '@/components/dashboard/ChoroplethMap';
+import React from 'react';
+import { Card } from '@/components/ui/card';
 import { StatsOverview } from '@/components/dashboard/StatsOverview';
-import type { CustomFeature } from '@/types/dashboard';
+import { feature } from 'topojson-client';
+import { indiaGeoData } from '@/data/indiaGeoData';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const DashboardSection = () => {
-  const [view, setView] = useState<'state' | 'district'>('state');
-  const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
-
-  const handleClick = (feature: any) => {
-    if (view === 'state' && feature.data) {
-      setSelectedRegion(feature.data.name);
-      setView('district');
-    }
-  };
-
   // Convert TopoJSON to GeoJSON
   const features = feature(indiaGeoData, indiaGeoData.objects.india).features;
   const data = features.map(f => ({
@@ -33,26 +21,24 @@ const DashboardSection = () => {
       <div className="container mx-auto px-4">
         <div className="mb-8">
           <h2 className="text-3xl font-bold text-primary mb-4">UDISE+ School Statistics Dashboard</h2>
-          {view === 'district' && (
-            <Button
-              variant="outline"
-              onClick={() => {
-                setView('state');
-                setSelectedRegion(null);
-              }}
-              className="mb-4"
-            >
-              <ArrowLeft className="mr-2 h-4 w-4" /> Back to States View
-            </Button>
-          )}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <ChoroplethMap 
-            data={data}
-            features={features}
-            onFeatureClick={handleClick}
-          />
+          <Card className="col-span-2 p-6">
+            <h3 className="text-xl font-bold mb-4">School Distribution</h3>
+            <div className="h-[400px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={data}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  <Bar dataKey="primarySchools" fill="#4f46e5" name="Primary Schools" />
+                  <Bar dataKey="secondarySchools" fill="#06b6d4" name="Secondary Schools" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </Card>
           <StatsOverview data={data} />
         </div>
       </div>
