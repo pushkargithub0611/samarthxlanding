@@ -1,3 +1,5 @@
+import type { ChoroplethBoundFeature } from '@nivo/geo';
+
 export interface SchoolStats {
   count: number;
   name?: string;
@@ -12,4 +14,16 @@ export interface SchoolData {
   districts: {
     [key: string]: RegionData;
   };
+}
+
+export interface FeatureProperties {
+  id: string;
+  name: string;
+  totalSchools: number;
+  primarySchools: number;
+  secondarySchools: number;
+}
+
+export interface CustomFeature extends ChoroplethBoundFeature {
+  properties: FeatureProperties;
 }

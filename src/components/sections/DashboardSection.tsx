@@ -1,24 +1,11 @@
 import React, { useState } from 'react';
-import { ResponsiveChoropleth } from '@nivo/geo';
 import { feature } from 'topojson-client';
-import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, School, GraduationCap } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { indiaGeoData } from '@/data/indiaGeoData';
-import type { SchoolData, RegionData } from '@/types/dashboard';
-import type { ChoroplethBoundFeature } from '@nivo/geo';
-
-interface FeatureProperties {
-  id: string;
-  name: string;
-  totalSchools: number;
-  primarySchools: number;
-  secondarySchools: number;
-}
-
-interface CustomFeature extends ChoroplethBoundFeature {
-  properties: FeatureProperties;
-}
+import { ChoroplethMap } from '@/components/dashboard/ChoroplethMap';
+import { StatsOverview } from '@/components/dashboard/StatsOverview';
+import type { CustomFeature } from '@/types/dashboard';
 
 const DashboardSection = () => {
   const [view, setView] = useState<'state' | 'district'>('state');
@@ -61,95 +48,12 @@ const DashboardSection = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <Card className="lg:col-span-2 p-6">
-            <div style={{ height: '600px', width: '100%' }}>
-              <ResponsiveChoropleth
-                data={data}
-                features={features}
-                margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-                colors="blues"
-                domain={[0, 150000]}
-                unknownColor="#666666"
-                label="properties.name"
-                valueFormat=".0f"
-                projectionScale={600}
-                projectionTranslation={[0.5, 0.6]}
-                projectionRotation={[78, 0, 0]}
-                borderWidth={0.5}
-                borderColor="#152538"
-                onClick={handleClick}
-                legends={[
-                  {
-                    anchor: 'bottom-left',
-                    direction: 'column',
-                    justify: true,
-                    translateX: 20,
-                    translateY: -20,
-                    itemsSpacing: 0,
-                    itemWidth: 94,
-                    itemHeight: 18,
-                    itemDirection: 'left-to-right',
-                    itemTextColor: '#444444',
-                    itemOpacity: 0.85,
-                    symbolSize: 18,
-                    effects: [
-                      {
-                        on: 'hover',
-                        style: {
-                          itemTextColor: '#000000',
-                          itemOpacity: 1
-                        }
-                      }
-                    ]
-                  }
-                ]}
-                tooltip={({ feature }) => (
-                  <div className="bg-white p-4 shadow-lg rounded-lg">
-                    <strong className="text-lg">{(feature as CustomFeature).properties.name}</strong>
-                    <div className="mt-2 space-y-1">
-                      <div className="flex items-center gap-2">
-                        <School className="h-4 w-4 text-blue-500" />
-                        <span>Total Schools: {(feature as CustomFeature).properties.totalSchools?.toLocaleString()}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <GraduationCap className="h-4 w-4 text-green-500" />
-                        <span>Primary: {(feature as CustomFeature).properties.primarySchools?.toLocaleString()}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <GraduationCap className="h-4 w-4 text-purple-500" />
-                        <span>Secondary: {(feature as CustomFeature).properties.secondarySchools?.toLocaleString()}</span>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              />
-            </div>
-          </Card>
-
-          <Card className="p-6">
-            <h3 className="text-xl font-bold mb-4">School Statistics Overview</h3>
-            <div className="space-y-4">
-              {data.map((state) => (
-                <div key={state.id} className="p-4 bg-gray-50 rounded-lg">
-                  <h4 className="font-semibold text-lg">{state.name}</h4>
-                  <div className="mt-2 space-y-2">
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-600">Total Schools:</span>
-                      <span className="font-medium">{state.value.toLocaleString()}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-600">Primary:</span>
-                      <span className="font-medium">{state.primarySchools.toLocaleString()}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-600">Secondary:</span>
-                      <span className="font-medium">{state.secondarySchools.toLocaleString()}</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </Card>
+          <ChoroplethMap 
+            data={data}
+            features={features}
+            onFeatureClick={handleClick}
+          />
+          <StatsOverview data={data} />
         </div>
       </div>
     </section>
