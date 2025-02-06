@@ -1,29 +1,52 @@
 import { Link } from "react-router-dom";
+import Logo from "./Logo";
+import { School, Mail, Phone, MapPin } from "lucide-react";
 
 const Footer = () => {
   const footerSections = [
     {
-      title: "Product",
-      links: ["Features", "Pricing", "Security", "Updates"],
+      title: "Academics",
+      links: ["Admissions", "Curriculum", "Examinations", "CCE Results"],
     },
     {
-      title: "Company",
-      links: ["About", "Blog", "Careers", "Press"],
+      title: "Student Services",
+      links: ["Scholarships", "Mid-day Meals", "Transfer Certificate", "Student Portal"],
     },
     {
       title: "Resources",
-      links: ["Documentation", "Help Center", "Contact", "Status"],
+      links: ["UDISE Reports", "Academic Calendar", "Textbooks", "Help Center"],
     },
     {
-      title: "Legal",
-      links: ["Privacy", "Terms", "Security", "Cookies"],
+      title: "Quick Links",
+      links: ["Ministry of Education", "UDISE+", "School Login", "Contact"],
     },
   ];
 
   return (
     <footer className="bg-primary text-white py-16 px-6">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+          <div className="space-y-4">
+            <Logo />
+            <p className="text-white/70 mt-4">
+              A comprehensive ERP solution for Indian schools under the Ministry of Education
+            </p>
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 text-white/70">
+                <MapPin className="w-4 h-4" />
+                <span>123 Education Street, New Delhi</span>
+              </div>
+              <div className="flex items-center gap-2 text-white/70">
+                <Phone className="w-4 h-4" />
+                <span>+91 1234567890</span>
+              </div>
+              <div className="flex items-center gap-2 text-white/70">
+                <Mail className="w-4 h-4" />
+                <span>contact@samarthx.edu.in</span>
+              </div>
+            </div>
+          </div>
+          
           {footerSections.map((section) => (
             <div key={section.title}>
               <h3 className="font-semibold mb-4">{section.title}</h3>
@@ -31,7 +54,7 @@ const Footer = () => {
                 {section.links.map((link) => (
                   <li key={link}>
                     <Link
-                      to={`/${link.toLowerCase()}`}
+                      to={`/${link.toLowerCase().replace(/\s+/g, '-')}`}
                       className="text-white/70 hover:text-white transition-colors"
                     >
                       {link}
@@ -45,17 +68,17 @@ const Footer = () => {
         
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-white/70 text-sm">
-            © 2024 BankApp. All rights reserved.
+            © 2024 SamarthX - Ministry of Education, Government of India
           </p>
           <div className="flex items-center space-x-6">
-            <Link to="#" className="text-white/70 hover:text-white transition-colors">
-              Twitter
+            <Link to="/privacy-policy" className="text-white/70 hover:text-white transition-colors">
+              Privacy Policy
             </Link>
-            <Link to="#" className="text-white/70 hover:text-white transition-colors">
-              LinkedIn
+            <Link to="/terms" className="text-white/70 hover:text-white transition-colors">
+              Terms of Use
             </Link>
-            <Link to="#" className="text-white/70 hover:text-white transition-colors">
-              GitHub
+            <Link to="/accessibility" className="text-white/70 hover:text-white transition-colors">
+              Accessibility
             </Link>
           </div>
         </div>
