@@ -34,7 +34,7 @@ const DashboardSection = () => {
   };
 
   // Convert TopoJSON to GeoJSON and prepare the data
-  const features = feature(indiaGeoData, indiaGeoData.objects.india.type).features;
+  const features = feature(indiaGeoData, indiaGeoData.objects.india).features;
   const data = Object.entries(schoolData.states).map(([id, data]) => ({
     id,
     value: data.count,
