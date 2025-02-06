@@ -22,22 +22,13 @@ const schoolData: SchoolData = {
   }
 };
 
-interface GeoFeature {
-  id: string;
-  type: string;
-  properties: {
-    name: string;
-  };
-  geometry: any;
-}
-
 const DashboardSection = () => {
   const [view, setView] = useState<'state' | 'district'>('state');
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
 
-  const handleClick = (geography: GeoFeature) => {
-    if (view === 'state') {
-      setSelectedRegion(geography.properties.name);
+  const handleClick = (feature: any) => {
+    if (view === 'state' && feature.data) {
+      setSelectedRegion(feature.data.name);
       setView('district');
     }
   };
@@ -89,9 +80,9 @@ const DashboardSection = () => {
               onClick={handleClick}
               tooltip={({ feature }) => (
                 <div className="bg-white p-2 shadow-lg rounded-lg">
-                  <strong>{feature.properties.name}</strong>
+                  <strong>{feature.data?.name}</strong>
                   <br />
-                  Schools: {feature.value?.toLocaleString()}
+                  Schools: {feature.data?.value?.toLocaleString() || 'N/A'}
                 </div>
               )}
             />
