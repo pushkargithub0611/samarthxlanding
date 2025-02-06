@@ -34,7 +34,7 @@ const Navigation = () => {
           <Button variant="ghost" className="hidden md:inline-flex">
             Login
           </Button>
-          <Button className="bg-purple-600 hover:bg-purple-700 text-white">
+          <Button className="bg-accent hover:bg-blue-500 text-white">
             Get Demo
           </Button>
         </div>

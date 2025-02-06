@@ -9,7 +9,7 @@ const compliancePoints = [
 
 const UDISESection = () => {
   return (
-    <section className="bg-purple-50 py-16 px-4 md:px-6 lg:px-8">
+    <section className="bg-blue-50 py-16 px-4 md:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-2 gap-8 items-center">
           <div>
@@ -20,14 +20,14 @@ const UDISESection = () => {
             <ul className="space-y-4">
               {compliancePoints.map((item, index) => (
                 <li key={index} className="flex items-center">
-                  <BookmarkCheck className="w-5 h-5 text-purple-600 mr-2" />
+                  <BookmarkCheck className="w-5 h-5 text-accent mr-2" />
                   <span>{item}</span>
                 </li>
               ))}
             </ul>
           </div>
           <div className="flex justify-center">
-            <School className="w-64 h-64 text-purple-600" />
+            <School className="w-64 h-64 text-accent" />
           </div>
         </div>
       </div>
