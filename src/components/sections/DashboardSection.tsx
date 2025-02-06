@@ -62,7 +62,7 @@ const DashboardSection = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <Card className="lg:col-span-2 p-6">
-            <div className="h-[600px]">
+            <div style={{ height: '600px', width: '100%' }}>
               <ResponsiveChoropleth
                 data={data}
                 features={features}
@@ -72,11 +72,9 @@ const DashboardSection = () => {
                 unknownColor="#666666"
                 label="properties.name"
                 valueFormat=".0f"
-                projectionScale={1000}
+                projectionScale={600}
                 projectionTranslation={[0.5, 0.6]}
                 projectionRotation={[78, 0, 0]}
-                enableGraticule={true}
-                graticuleLineColor="#dddddd"
                 borderWidth={0.5}
                 borderColor="#152538"
                 onClick={handleClick}
