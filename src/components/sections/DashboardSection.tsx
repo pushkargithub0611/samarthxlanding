@@ -4,34 +4,50 @@ import { feature } from 'topojson-client';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
+import { indiaGeoData } from '@/data/indiaGeoData';
+import type { SchoolData, RegionData } from '@/types/dashboard';
 
 // Mock data - Replace with actual API data
-const schoolData = {
+const schoolData: SchoolData = {
   states: {
     'IN-MH': { count: 96000, name: 'Maharashtra' },
     'IN-UP': { count: 150000, name: 'Uttar Pradesh' },
     'IN-MP': { count: 80000, name: 'Madhya Pradesh' },
-    // Add data for other states
   },
   districts: {
     'maharashtra': {
       'mumbai': { count: 5000 },
       'pune': { count: 4500 },
-      // Add district data
     }
   }
 };
 
-const DashboardSection = () => {
-  const [view, setView] = useState('state');
-  const [selectedRegion, setSelectedRegion] = useState(null);
+interface GeoFeature {
+  id: string;
+  type: string;
+  properties: {
+    name: string;
+  };
+  geometry: any;
+}
 
-  const handleClick = (geography) => {
+const DashboardSection = () => {
+  const [view, setView] = useState<'state' | 'district'>('state');
+  const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
+
+  const handleClick = (geography: GeoFeature) => {
     if (view === 'state') {
       setSelectedRegion(geography.properties.name);
       setView('district');
     }
   };
+
+  const features = feature(indiaGeoData, 'india').features;
+  const data = Object.entries(schoolData.states).map(([id, data]) => ({
+    id,
+    value: data.count,
+    name: data.name
+  }));
 
   return (
     <section className="py-16 bg-background">
@@ -55,12 +71,8 @@ const DashboardSection = () => {
         <Card className="p-6">
           <div className="h-[600px]">
             <ResponsiveChoropleth
-              data={Object.entries(schoolData.states).map(([id, data]) => ({
-                id,
-                value: data.count,
-                name: data.name
-              }))}
-              features={feature(indiaGeoData, 'india').features}
+              data={data}
+              features={features}
               margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
               colors="blues"
               domain={[0, 150000]}
@@ -79,7 +91,7 @@ const DashboardSection = () => {
                 <div className="bg-white p-2 shadow-lg rounded-lg">
                   <strong>{feature.properties.name}</strong>
                   <br />
-                  Schools: {feature.value.toLocaleString()}
+                  Schools: {feature.value?.toLocaleString()}
                 </div>
               )}
             />
