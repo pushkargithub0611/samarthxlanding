@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { Send, UserRound } from "lucide-react";
+import { Send, UserRound, Menu, Star, Inbox, Mail, Users } from "lucide-react";
 
 interface Message {
   id: string;
@@ -24,11 +24,9 @@ export default function Communication() {
   const SOCKET_URL = "wss://your-websocket-server.com";
   
   useEffect(() => {
-    // Initialize username
     const randomUser = `User${Math.floor(Math.random() * 1000)}`;
     setUsername(randomUser);
     
-    // Connect to WebSocket server
     const socket = io(SOCKET_URL);
     
     socket.on("connect", () => {
@@ -65,32 +63,67 @@ export default function Communication() {
       timestamp: new Date(),
     };
     
-    // In a real implementation, this would emit to the WebSocket server
     setMessages((prev) => [...prev, message]);
     setNewMessage("");
   };
 
   return (
-    <div className="container mx-auto p-6 max-w-4xl">
-      <Card className="p-6">
-        <h1 className="text-2xl font-bold mb-6 text-blue-600">Communication Hub</h1>
-        
-        <div className="mb-4 flex items-center gap-2">
-          <UserRound className="text-blue-500" />
-          <span className="font-medium">Your username: {username}</span>
+    <div className="flex h-screen bg-[#F6F6F7]">
+      {/* Gmail-like Sidebar */}
+      <div className="w-64 bg-white border-r border-[#E6E4DD] flex flex-col">
+        <div className="p-4 border-b border-[#E6E4DD] flex items-center gap-2">
+          <Menu className="h-6 w-6 text-[#555555]" />
+          <span className="font-semibold text-[#333333]">SamarthX Mail</span>
         </div>
         
-        <ScrollArea className="h-[400px] border rounded-lg p-4 mb-4">
-          <div className="space-y-4">
+        <div className="p-2 space-y-1">
+          <Button 
+            variant="ghost" 
+            className="w-full justify-start gap-3 text-[#333333] hover:bg-[#F1F0FB]"
+          >
+            <Inbox className="h-4 w-4" /> Inbox
+          </Button>
+          <Button 
+            variant="ghost" 
+            className="w-full justify-start gap-3 text-[#333333] hover:bg-[#F1F0FB]"
+          >
+            <Star className="h-4 w-4" /> Starred
+          </Button>
+          <Button 
+            variant="ghost" 
+            className="w-full justify-start gap-3 text-[#333333] hover:bg-[#F1F0FB]"
+          >
+            <Mail className="h-4 w-4" /> Sent
+          </Button>
+          <Button 
+            variant="ghost" 
+            className="w-full justify-start gap-3 text-[#333333] hover:bg-[#F1F0FB]"
+          >
+            <Users className="h-4 w-4" /> Groups
+          </Button>
+        </div>
+      </div>
+
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col">
+        {/* Header */}
+        <div className="bg-white border-b border-[#E6E4DD] p-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <UserRound className="text-[#1EAEDB]" />
+            <span className="font-medium text-[#333333]">Your username: {username}</span>
+          </div>
+        </div>
+
+        {/* Messages Area */}
+        <ScrollArea className="flex-1 p-4">
+          <div className="space-y-4 max-w-3xl mx-auto">
             {messages.map((message) => (
               <div
                 key={message.id}
-                className={`p-3 rounded-lg ${
+                className={`p-3 rounded-lg max-w-[80%] ${
                   message.sender === username
-                    ? "bg-blue-500 text-white ml-auto"
-                    : "bg-gray-100"
-                } max-w-[80%] ${
-                  message.sender === username ? "ml-auto" : "mr-auto"
+                    ? "ml-auto bg-[#1EAEDB] text-white"
+                    : "bg-white border border-[#E6E4DD]"
                 }`}
               >
                 <div className="font-medium text-sm mb-1">
@@ -104,21 +137,27 @@ export default function Communication() {
             ))}
           </div>
         </ScrollArea>
-        
-        <div className="flex gap-2">
-          <Input
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            placeholder="Type your message..."
-            onKeyPress={(e) => e.key === "Enter" && sendMessage()}
-            className="flex-1"
-          />
-          <Button onClick={sendMessage} className="bg-blue-500 hover:bg-blue-600">
-            <Send className="h-4 w-4 mr-2" />
-            Send
-          </Button>
+
+        {/* Message Input */}
+        <div className="p-4 bg-white border-t border-[#E6E4DD]">
+          <div className="max-w-3xl mx-auto flex gap-2">
+            <Input
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              placeholder="Type your message..."
+              onKeyPress={(e) => e.key === "Enter" && sendMessage()}
+              className="flex-1 border-[#E6E4DD] focus:ring-[#1EAEDB] focus:border-[#1EAEDB]"
+            />
+            <Button 
+              onClick={sendMessage} 
+              className="bg-[#1EAEDB] hover:bg-[#0FA0CE] text-white"
+            >
+              <Send className="h-4 w-4 mr-2" />
+              Send
+            </Button>
+          </div>
         </div>
-      </Card>
+      </div>
     </div>
   );
 }
