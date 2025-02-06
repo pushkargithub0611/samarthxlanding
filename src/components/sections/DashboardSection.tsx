@@ -33,7 +33,8 @@ const DashboardSection = () => {
     }
   };
 
-  const features = feature(indiaGeoData, 'india').features;
+  // Convert TopoJSON to GeoJSON and prepare the data
+  const features = feature(indiaGeoData, indiaGeoData.objects.india.type).features;
   const data = Object.entries(schoolData.states).map(([id, data]) => ({
     id,
     value: data.count,
@@ -97,7 +98,7 @@ const DashboardSection = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {Object.entries(schoolData.districts[selectedRegion.toLowerCase()] || {}).map(([district, data]) => (
                 <Card key={district} className="p-4">
-                  <h4 className="font-medium">{district}</h4>
+                  <h4 className="font-medium capitalize">{district}</h4>
                   <p className="text-secondary">Schools: {data.count.toLocaleString()}</p>
                 </Card>
               ))}
