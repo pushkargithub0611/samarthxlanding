@@ -7,6 +7,18 @@ import { ArrowLeft, School, GraduationCap } from 'lucide-react';
 import { indiaGeoData } from '@/data/indiaGeoData';
 import type { SchoolData, RegionData } from '@/types/dashboard';
 
+interface FeatureProperties {
+  id: string;
+  name: string;
+  totalSchools: number;
+  primarySchools: number;
+  secondarySchools: number;
+}
+
+interface CustomFeature {
+  properties: FeatureProperties;
+}
+
 const DashboardSection = () => {
   const [view, setView] = useState<'state' | 'district'>('state');
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
@@ -92,7 +104,7 @@ const DashboardSection = () => {
                     ]
                   }
                 ]}
-                tooltip={({ feature }) => (
+                tooltip={({ feature }: { feature: CustomFeature }) => (
                   <div className="bg-white p-4 shadow-lg rounded-lg">
                     <strong className="text-lg">{feature.properties.name}</strong>
                     <div className="mt-2 space-y-1">
