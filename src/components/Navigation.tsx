@@ -64,11 +64,15 @@ const Navigation = () => {
   }
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-lg border-b border-border">
+    <nav 
+      className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-lg border-b border-border"
+      role="navigation"
+      aria-label="Main navigation"
+    >
       <div className="max-w-[1600px] mx-auto px-6 sm:px-8 h-20">
         <div className="flex items-center justify-between h-full">
           <div className="flex items-center space-x-12">
-            <Link to="/" className="flex items-center">
+            <Link to="/" className="flex items-center" aria-label="Go to homepage">
               <Logo />
             </Link>
             <div className="hidden md:flex items-center space-x-8">
@@ -80,8 +84,15 @@ const Navigation = () => {
             <button
               onClick={toggleMenu}
               className="md:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-menu"
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             >
-              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isMenuOpen ? (
+                <X className="w-6 h-6" aria-hidden="true" />
+              ) : (
+                <Menu className="w-6 h-6" aria-hidden="true" />
+              )}
             </button>
 
             <div className="hidden md:flex items-center space-x-4">

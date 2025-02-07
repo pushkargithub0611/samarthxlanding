@@ -14,7 +14,11 @@ const MobileMenu = ({ isOpen, session, onLogout, onMenuItemClick }: MobileMenuPr
   if (!isOpen) return null;
 
   return (
-    <div className="md:hidden py-4 bg-white border-t border-gray-100">
+    <div 
+      className="md:hidden py-4 bg-white border-t border-gray-100"
+      role="navigation"
+      aria-label="Mobile navigation menu"
+    >
       <div className="flex flex-col space-y-4 px-4">
         <a 
           href="/about"
@@ -22,6 +26,7 @@ const MobileMenu = ({ isOpen, session, onLogout, onMenuItemClick }: MobileMenuPr
           rel="noopener noreferrer"
           className="flex items-center gap-2 text-secondary hover:text-primary transition-colors py-2"
           onClick={onMenuItemClick}
+          aria-label="About Us - Opens in new tab"
         >
           <span>About Us</span>
         </a>
