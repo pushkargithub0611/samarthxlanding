@@ -1,3 +1,4 @@
+
 import { School, BookmarkCheck, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
@@ -15,9 +16,10 @@ const UDISESection = () => {
   const handleLearnMore = () => {
     toast({
       title: "UDISE+ Documentation",
-      description: "Opening UDISE+ compliance documentation...",
+      description: "Redirecting to UDISE+ official website...",
       duration: 2000,
     });
+    window.open("https://udiseplus.gov.in/#/en/home", "_blank", "noopener,noreferrer");
   };
 
   return (
