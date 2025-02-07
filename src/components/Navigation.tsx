@@ -1,4 +1,3 @@
-
 import { Button } from "./ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "./Logo";
@@ -15,43 +14,48 @@ const Navigation = () => {
 
   useEffect(() => {
     // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
+    supabase.auth.getSession().then(({ data: { session: currentSession } }) => {
+      setSession(currentSession);
+      if (!currentSession && window.location.pathname !== '/auth') {
+        navigate('/auth');
+      }
     });
 
     // Listen for auth changes
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-      if (!session && window.location.pathname !== '/auth') {
-        navigate('/');
+    } = supabase.auth.onAuthStateChange(async (_event, currentSession) => {
+      setSession(currentSession);
+      
+      if (!currentSession) {
+        // Clear any local state
+        setSession(null);
+        if (window.location.pathname !== '/auth') {
+          navigate('/auth');
+        }
       }
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      subscription.unsubscribe();
+    };
   }, [navigate]);
 
   const handleLogout = async () => {
     try {
-      const { error } = await supabase.auth.signOut();
-      if (error) throw error;
-      
+      await supabase.auth.signOut({ scope: 'local' });
       setSession(null);
       toast({
         title: "Logged out successfully",
       });
-      navigate('/');
+      navigate('/auth');
     } catch (error: any) {
       console.error("Logout error:", error);
-      // Force clear session and redirect even if server logout fails
-      setSession(null);
-      await supabase.auth.signOut({ scope: 'local' });
       toast({
-        title: "Logged out",
-        description: "Your local session has been cleared",
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to log out. Please try again.",
       });
-      navigate('/');
     }
   };
 
