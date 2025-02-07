@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { Volume2, ZoomIn, Settings } from 'lucide-react';
+import { Volume2, ZoomIn, Settings, Eye } from 'lucide-react';
 import {
   Sheet,
   SheetContent,
@@ -11,10 +11,18 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 const AccessibilityControls = () => {
   const [isVoiceEnabled, setIsVoiceEnabled] = useState(false);
   const [zoomLevel, setZoomLevel] = useState(100);
+  const [colorMode, setColorMode] = useState<string>("default");
   const { toast } = useToast();
   const synth = window.speechSynthesis;
 
@@ -26,10 +34,26 @@ const AccessibilityControls = () => {
     };
   }, [zoomLevel]);
 
+  useEffect(() => {
+    // Apply color mode
+    document.body.classList.remove('default-colors', 'deuteranopia', 'protanopia', 'tritanopia');
+    if (colorMode !== 'default') {
+      document.body.classList.add(colorMode);
+    }
+  }, [colorMode]);
+
   const handleVoiceToggle = () => {
     setIsVoiceEnabled(!isVoiceEnabled);
     toast({
       title: isVoiceEnabled ? "Voice hover disabled" : "Voice hover enabled",
+      duration: 2000,
+    });
+  };
+
+  const handleColorModeChange = (value: string) => {
+    setColorMode(value);
+    toast({
+      title: `Color mode changed to ${value}`,
       duration: 2000,
     });
   };
@@ -123,6 +147,23 @@ const AccessibilityControls = () => {
                 +
               </Button>
             </div>
+          </div>
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <Eye className="h-5 w-5" />
+              <span>Color Mode</span>
+            </div>
+            <Select value={colorMode} onValueChange={handleColorModeChange}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select color mode" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="default">Default</SelectItem>
+                <SelectItem value="deuteranopia">Deuteranopia (Red-Green)</SelectItem>
+                <SelectItem value="protanopia">Protanopia (Red-Green)</SelectItem>
+                <SelectItem value="tritanopia">Tritanopia (Blue-Yellow)</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </div>
       </SheetContent>

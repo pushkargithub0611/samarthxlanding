@@ -39,6 +39,31 @@
   .glass {
     @apply bg-white/80 backdrop-blur-sm border border-white/20;
   }
+
+  /* Colorblind modes */
+  .deuteranopia {
+    --primary: 240 5.9% 10%;
+    --accent: 47 100% 50%; /* Yellow */
+    --destructive: 231 48% 48%; /* Blue */
+    background-color: #FFFFFF;
+    color: #000000;
+  }
+
+  .protanopia {
+    --primary: 240 5.9% 10%;
+    --accent: 231 48% 48%; /* Blue */
+    --destructive: 47 100% 50%; /* Yellow */
+    background-color: #FFFFFF;
+    color: #000000;
+  }
+
+  .tritanopia {
+    --primary: 240 5.9% 10%;
+    --accent: 0 0% 0%; /* Black */
+    --destructive: 47 100% 50%; /* Yellow */
+    background-color: #FFFFFF;
+    color: #000000;
+  }
 }
 
 .animate-float {
