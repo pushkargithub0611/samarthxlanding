@@ -1,7 +1,8 @@
+
 import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
 import Logo from "./Logo";
-import { BookOpen, Award, IndianRupee, User } from "lucide-react";
+import { BookOpen, Award, IndianRupee, User, FileText } from "lucide-react";
 
 const Navigation = () => {
   return (
@@ -19,6 +20,10 @@ const Navigation = () => {
           <Link to="/achievements" className="flex items-center gap-2 text-secondary hover:text-primary transition-colors">
             <Award className="w-4 h-4" />
             <span>Achievements</span>
+          </Link>
+          <Link to="/documents" className="flex items-center gap-2 text-secondary hover:text-primary transition-colors">
+            <FileText className="w-4 h-4" />
+            <span>Documents</span>
           </Link>
           <Link to="/fees" className="flex items-center gap-2 text-secondary hover:text-primary transition-colors">
             <IndianRupee className="w-4 h-4" />

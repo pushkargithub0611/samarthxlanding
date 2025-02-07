@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -5,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Index from "./pages/Index";
 import Communication from "./pages/Communication";
+import Documents from "./pages/Documents";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +27,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/communication" element={<Communication />} />
+          <Route path="/documents" element={<Documents />} />
           <Route path="/students" element={<ModulePage title="Student Management" />} />
           <Route path="/teachers" element={<ModulePage title="Teacher Management" />} />
           <Route path="/academics" element={<ModulePage title="Academic Management" />} />
