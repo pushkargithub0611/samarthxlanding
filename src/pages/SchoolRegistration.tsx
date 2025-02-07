@@ -12,6 +12,7 @@ import { SchoolFormData } from "@/types/school";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import Logo from "@/components/Logo";
 
 const TOTAL_STEPS = 6;
 
@@ -95,17 +96,18 @@ const SchoolRegistration = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background pt-20 pb-8">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white pt-20 pb-8">
       <div className="container max-w-4xl">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-4">School Registration</h1>
-          <Progress value={progress} className="h-2" />
-          <p className="text-sm text-muted-foreground mt-2">
+        <div className="flex flex-col items-center mb-8">
+          <Logo />
+          <h1 className="text-3xl font-bold text-gray-900 mt-6 mb-4">School Registration</h1>
+          <Progress value={progress} className="h-2 w-full max-w-md bg-gray-100" />
+          <p className="text-sm text-gray-600 mt-2">
             Step {currentStep} of {TOTAL_STEPS}
           </p>
         </div>
 
-        <Card className="p-6">
+        <Card className="p-6 shadow-lg bg-white/80 backdrop-blur-sm">
           {currentStep === 1 && (
             <BasicInfoForm
               data={formData}
