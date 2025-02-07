@@ -1,3 +1,4 @@
+
 import { 
   Users, 
   UserCheck, 
@@ -71,12 +72,14 @@ const FeaturesSection = () => {
             <Button
               key={index}
               variant="outline"
-              className="h-auto p-6 border rounded-lg hover:shadow-lg transition-all flex flex-col items-start text-left"
+              className="min-h-[200px] w-full h-auto p-6 border rounded-lg hover:shadow-lg transition-all flex flex-col items-start text-left space-y-4 overflow-hidden"
               onClick={() => handleFeatureClick(feature.path, feature.title)}
             >
-              <feature.icon className="w-12 h-12 text-blue-500 mb-4" />
-              <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-              <p className="text-gray-600">{feature.description}</p>
+              <feature.icon className="w-12 h-12 text-blue-500 shrink-0" />
+              <div className="space-y-2 w-full">
+                <h3 className="text-xl font-semibold line-clamp-1">{feature.title}</h3>
+                <p className="text-gray-600 text-sm line-clamp-3">{feature.description}</p>
+              </div>
             </Button>
           ))}
         </div>
