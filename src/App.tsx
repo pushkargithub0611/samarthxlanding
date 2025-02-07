@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Index from "./pages/Index";
 import Communication from "./pages/Communication";
 import Documents from "./pages/Documents";
+import Auth from "./pages/Auth";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/auth" element={<Auth />} />
           <Route path="/communication" element={<Communication />} />
           <Route path="/documents" element={<Documents />} />
           <Route path="/students" element={<ModulePage title="Student Management" />} />

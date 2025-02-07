@@ -1,10 +1,32 @@
 
 import { Button } from "./ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "./Logo";
 import { BookOpen, Award, IndianRupee, User, FileText } from "lucide-react";
+import { supabase } from "@/lib/supabase";
+import { useToast } from "./ui/use-toast";
 
 const Navigation = () => {
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const handleLogout = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      toast({
+        title: "Logged out successfully",
+      });
+      navigate('/');
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: error.message,
+      });
+    }
+  };
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-lg border-b border-border">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
@@ -36,8 +58,13 @@ const Navigation = () => {
         </div>
 
         <div className="flex items-center space-x-4">
-          <Button variant="ghost" className="hidden md:inline-flex">
-            Login
+          <Link to="/auth">
+            <Button variant="ghost">
+              Login
+            </Button>
+          </Link>
+          <Button onClick={handleLogout} variant="ghost">
+            Logout
           </Button>
           <Button className="bg-accent hover:bg-blue-500 text-white">
             Get Demo
