@@ -9,6 +9,7 @@ import Communication from "./pages/Communication";
 import Documents from "./pages/Documents";
 import Auth from "./pages/Auth";
 import SchoolRegistration from "./pages/SchoolRegistration";
+import Schools from "./pages/Schools";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/school-registration" element={<SchoolRegistration />} />
+          <Route path="/schools" element={<Schools />} />
           <Route path="/communication" element={<Communication />} />
           <Route path="/documents" element={<Documents />} />
           <Route path="/students" element={<ModulePage title="Student Management" />} />

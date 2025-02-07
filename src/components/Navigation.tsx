@@ -2,7 +2,7 @@
 import { Button } from "./ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "./Logo";
-import { BookOpen, Award, IndianRupee, User, FileText } from "lucide-react";
+import { BookOpen, Award, User, FileText, School } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { useToast } from "./ui/use-toast";
 import { useEffect, useState } from "react";
@@ -74,10 +74,12 @@ const Navigation = () => {
             <FileText className="w-4 h-4" />
             <span>Documents</span>
           </Link>
-          <Link to="/fees" className="flex items-center gap-2 text-secondary hover:text-primary transition-colors">
-            <IndianRupee className="w-4 h-4" />
-            <span>Fees</span>
-          </Link>
+          {session && (
+            <Link to="/schools" className="flex items-center gap-2 text-secondary hover:text-primary transition-colors">
+              <School className="w-4 h-4" />
+              <span>Schools</span>
+            </Link>
+          )}
           <Link to="/portal" className="flex items-center gap-2 text-secondary hover:text-primary transition-colors">
             <User className="w-4 h-4" />
             <span>Student Portal</span>
