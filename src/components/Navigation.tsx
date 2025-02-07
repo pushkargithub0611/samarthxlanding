@@ -1,3 +1,4 @@
+
 import { Button } from "./ui/button";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Logo from "./Logo";
@@ -71,7 +72,7 @@ const Navigation = () => {
                 href="/about" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="flex items-center gap-2 text-secondary hover:text-primary transition-colors group relative"
+                className="flex items-center gap-2 text-secondary hover:text-primary transition-colors group relative ml-8"
               >
                 <span className="animate-float">About Us</span>
                 <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 p-4 bg-white rounded-lg shadow-lg w-72 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
@@ -107,44 +108,47 @@ const Navigation = () => {
               </Link>
             </div>
           </div>
-          <button
-            onClick={toggleMenu}
-            className="md:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-          >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          <div className="flex items-center space-x-4">
+            <button
+              onClick={toggleMenu}
+              className="md:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+            >
+              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+
+            <div className="hidden md:flex items-center space-x-4">
+              {session ? (
+                <>
+                  <div className="flex items-center gap-2">
+                    <User className="w-4 h-4" />
+                    <span className="text-sm text-secondary">{session?.user?.email}</span>
+                  </div>
+                  <Button onClick={handleLogout} variant="ghost">
+                    Logout
+                  </Button>
+                  <Link to="/school-registration">
+                    <Button className="bg-accent hover:bg-blue-500 text-white">
+                      Register School
+                    </Button>
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link to="/auth">
+                    <Button variant="ghost" className="px-6">
+                      Login
+                    </Button>
+                  </Link>
+                  <Button className="bg-accent hover:bg-blue-500 text-white">
+                    Get Demo
+                  </Button>
+                </>
+              )}
+            </div>
+          </div>
         </div>
 
-        <div className="hidden md:flex items-center space-x-4">
-          {session ? (
-            <>
-              <div className="flex items-center gap-2">
-                <User className="w-4 h-4" />
-                <span className="text-sm text-secondary">{session?.user?.email}</span>
-              </div>
-              <Button onClick={handleLogout} variant="ghost">
-                Logout
-              </Button>
-              <Link to="/school-registration">
-                <Button className="bg-accent hover:bg-blue-500 text-white">
-                  Register School
-                </Button>
-              </Link>
-            </>
-          ) : (
-            <>
-              <Link to="/auth">
-                <Button variant="ghost">
-                  Login
-                </Button>
-              </Link>
-              <Button className="bg-accent hover:bg-blue-500 text-white">
-                Get Demo
-              </Button>
-            </>
-          )}
-        </div>
-
+        {/* Mobile menu */}
         {isMenuOpen && (
           <div className="md:hidden py-4 bg-white border-t border-gray-100">
             <div className="flex flex-col space-y-4 px-4">
