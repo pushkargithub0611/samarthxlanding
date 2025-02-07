@@ -1,4 +1,3 @@
-
 import { Button } from "./ui/button";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Logo from "./Logo";
@@ -20,10 +19,6 @@ const Navigation = () => {
     supabase.auth.getSession().then(({ data: { session: currentSession } }) => {
       setSession(currentSession);
       setIsInitialized(true);
-      // Only redirect if not on auth page and user is not logged in
-      if (!currentSession && location.pathname !== '/auth') {
-        navigate('/auth');
-      }
     });
 
     // Listen for auth changes
@@ -31,13 +26,8 @@ const Navigation = () => {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (_event, currentSession) => {
       setSession(currentSession);
-      
-      if (!currentSession) {
-        // Clear any local state
-        setSession(null);
-        if (location.pathname !== '/auth') {
-          navigate('/auth');
-        }
+      if (!currentSession && location.pathname !== '/auth' && location.pathname !== '/') {
+        navigate('/auth');
       }
     });
 
@@ -53,7 +43,7 @@ const Navigation = () => {
       toast({
         title: "Logged out successfully",
       });
-      navigate('/auth');
+      navigate('/');
     } catch (error: any) {
       console.error("Logout error:", error);
       toast({
