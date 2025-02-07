@@ -79,6 +79,17 @@ const Navigation = () => {
           
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
+            <Link to="/about" className="flex items-center gap-2 text-secondary hover:text-primary transition-colors group relative">
+              <span className="animate-float">About Us</span>
+              <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 p-4 bg-white rounded-lg shadow-lg w-72 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                <p className="text-sm text-gray-600 leading-relaxed">
+                  <span className="font-bold bg-gradient-to-r from-accent to-blue-500 bg-clip-text text-transparent animate-pulse">
+                    SamarthX
+                  </span>{" "}
+                  is revolutionizing education management through innovative digital solutions. We empower schools with seamless administrative tools, fostering excellence in education across India.
+                </p>
+              </div>
+            </Link>
             <Link to="/academics" className="flex items-center gap-2 text-secondary hover:text-primary transition-colors">
               <BookOpen className="w-4 h-4" />
               <span>Academics</span>
@@ -139,6 +150,13 @@ const Navigation = () => {
         {isMenuOpen && (
           <div className="md:hidden py-4 bg-white border-t border-gray-100">
             <div className="flex flex-col space-y-4 px-4">
+              <Link 
+                to="/about"
+                className="flex items-center gap-2 text-secondary hover:text-primary transition-colors py-2"
+                onClick={toggleMenu}
+              >
+                <span>About Us</span>
+              </Link>
               <Link 
                 to="/academics"
                 className="flex items-center gap-2 text-secondary hover:text-primary transition-colors py-2"
