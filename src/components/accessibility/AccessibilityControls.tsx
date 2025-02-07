@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { Volume2, ZoomIn, Settings, Eye } from 'lucide-react';
+import { Volume2, ZoomIn, Accessibility, Eye } from 'lucide-react';
 import {
   Sheet,
   SheetContent,
@@ -105,7 +105,7 @@ const AccessibilityControls = () => {
           className="fixed bottom-4 right-4 z-50"
           aria-label="Accessibility controls"
         >
-          <Settings className="h-5 w-5" />
+          <Accessibility className="h-5 w-5" />
         </Button>
       </SheetTrigger>
       <SheetContent>
