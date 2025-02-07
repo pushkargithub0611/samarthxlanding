@@ -1,6 +1,6 @@
 
 import { Card } from "@/components/ui/card";
-import { School, Droplets, Lightbulb, Wheelchair } from "lucide-react";
+import { School, Droplets, Lightbulb, Accessibility } from "lucide-react";
 
 const StatCard = ({ title, value, icon: Icon, color }: { 
   title: string; 
@@ -48,7 +48,7 @@ export const SchoolInfrastructureStats = () => {
       <StatCard
         title="Accessible (Ramps)"
         value={schoolsWithRamps}
-        icon={Wheelchair}
+        icon={Accessibility}
         color="bg-green-500"
       />
     </div>
