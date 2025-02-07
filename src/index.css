@@ -40,29 +40,71 @@
     @apply bg-white/80 backdrop-blur-sm border border-white/20;
   }
 
-  /* Colorblind modes */
+  /* Enhanced Colorblind modes with comprehensive color adjustments */
   .deuteranopia {
-    --primary: 240 5.9% 10%;
-    --accent: 47 100% 50%; /* Yellow */
-    --destructive: 231 48% 48%; /* Blue */
-    background-color: #FFFFFF;
-    color: #000000;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 0%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 0%;
+    --primary: 47 100% 50%; /* Yellow - most visible for deuteranopia */
+    --primary-foreground: 0 0% 0%;
+    --secondary: 0 0% 90%;
+    --secondary-foreground: 0 0% 0%;
+    --muted: 0 0% 90%;
+    --muted-foreground: 0 0% 40%;
+    --accent: 231 48% 48%; /* Blue - distinguishable for deuteranopia */
+    --accent-foreground: 0 0% 0%;
+    --destructive: 231 48% 48%; /* Blue for destructive actions */
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 80%;
+    --input: 0 0% 80%;
+    --ring: 47 100% 50%;
   }
 
   .protanopia {
-    --primary: 240 5.9% 10%;
-    --accent: 231 48% 48%; /* Blue */
-    --destructive: 47 100% 50%; /* Yellow */
-    background-color: #FFFFFF;
-    color: #000000;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 0%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 0%;
+    --primary: 231 48% 48%; /* Blue - most visible for protanopia */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 90%;
+    --secondary-foreground: 0 0% 0%;
+    --muted: 0 0% 90%;
+    --muted-foreground: 0 0% 40%;
+    --accent: 47 100% 50%; /* Yellow - distinguishable for protanopia */
+    --accent-foreground: 0 0% 0%;
+    --destructive: 47 100% 50%; /* Yellow for destructive actions */
+    --destructive-foreground: 0 0% 0%;
+    --border: 0 0% 80%;
+    --input: 0 0% 80%;
+    --ring: 231 48% 48%;
   }
 
   .tritanopia {
-    --primary: 240 5.9% 10%;
-    --accent: 0 0% 0%; /* Black */
-    --destructive: 47 100% 50%; /* Yellow */
-    background-color: #FFFFFF;
-    color: #000000;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 0%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 0%;
+    --primary: 0 0% 0%; /* Black - clear for tritanopia */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 90%;
+    --secondary-foreground: 0 0% 0%;
+    --muted: 0 0% 90%;
+    --muted-foreground: 0 0% 40%;
+    --accent: 47 100% 50%; /* Yellow - distinguishable for tritanopia */
+    --accent-foreground: 0 0% 0%;
+    --destructive: 47 100% 50%; /* Yellow for destructive actions */
+    --destructive-foreground: 0 0% 0%;
+    --border: 0 0% 80%;
+    --input: 0 0% 80%;
+    --ring: 0 0% 0%;
   }
 }
 
