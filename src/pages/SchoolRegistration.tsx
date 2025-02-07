@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Progress } from "@/components/ui/progress";
 import { Card } from "@/components/ui/card";
@@ -13,8 +12,27 @@ import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import Logo from "@/components/Logo";
+import { School, ArrowRight, ArrowLeft } from "lucide-react";
 
 const TOTAL_STEPS = 6;
+
+const STEP_TITLES = [
+  "Basic Information",
+  "Location Details",
+  "Contact Information",
+  "Management Details",
+  "Academic Information",
+  "Respondent Details"
+];
+
+const STEP_DESCRIPTIONS = [
+  "Enter the basic details of your school",
+  "Provide the location information",
+  "Add contact details for communication",
+  "Specify management and administration details",
+  "Enter academic details and affiliations",
+  "Add respondent information"
+];
 
 const SchoolRegistration = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -96,18 +114,30 @@ const SchoolRegistration = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white pt-20 pb-8">
-      <div className="container max-w-4xl">
-        <div className="flex flex-col items-center mb-8">
-          <Logo />
-          <h1 className="text-3xl font-bold text-gray-900 mt-6 mb-4">School Registration</h1>
-          <Progress value={progress} className="h-2 w-full max-w-md bg-gray-100" />
-          <p className="text-sm text-gray-600 mt-2">
-            Step {currentStep} of {TOTAL_STEPS}
-          </p>
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-12 px-4">
+      <div className="container max-w-4xl mx-auto">
+        <div className="flex flex-col items-center mb-12">
+          <div className="animate-float mb-8">
+            <Logo />
+          </div>
+          <div className="flex items-center gap-3 mb-6">
+            <School className="w-6 h-6 text-blue-500" />
+            <h1 className="text-3xl font-bold text-gray-900">School Registration</h1>
+          </div>
+          
+          <div className="w-full max-w-md">
+            <Progress value={progress} className="h-2 bg-gray-100" />
+            <div className="mt-4 text-center">
+              <h2 className="text-xl font-semibold text-gray-900">{STEP_TITLES[currentStep - 1]}</h2>
+              <p className="text-sm text-gray-600 mt-1">{STEP_DESCRIPTIONS[currentStep - 1]}</p>
+              <p className="text-sm text-blue-500 font-medium mt-2">
+                Step {currentStep} of {TOTAL_STEPS}
+              </p>
+            </div>
+          </div>
         </div>
 
-        <Card className="p-6 shadow-lg bg-white/80 backdrop-blur-sm">
+        <Card className="p-8 shadow-lg bg-white/90 backdrop-blur-sm border border-blue-100">
           {currentStep === 1 && (
             <BasicInfoForm
               data={formData}

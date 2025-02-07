@@ -9,7 +9,7 @@ import { useState } from "react";
 import { Slider } from "@/components/ui/slider";
 import { supabase } from "@/lib/supabase";
 import { useToast } from "@/components/ui/use-toast";
-import { Github } from "lucide-react";
+import { Github, Mail, Lock, AlertCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const formSchema = z.object({
@@ -47,7 +47,6 @@ const LoginForm = () => {
         description: "You have been logged in successfully",
       });
       
-      // Navigate to school registration after successful login
       navigate("/school-registration");
     } catch (error: any) {
       toast({
@@ -83,9 +82,11 @@ const LoginForm = () => {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel className="flex items-center gap-2">
+                <Mail className="w-4 h-4" /> Email
+              </FormLabel>
               <FormControl>
-                <Input placeholder="Enter your email" {...field} />
+                <Input placeholder="Enter your email" {...field} className="bg-white" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -96,9 +97,11 @@ const LoginForm = () => {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel className="flex items-center gap-2">
+                <Lock className="w-4 h-4" /> Password
+              </FormLabel>
               <FormControl>
-                <Input type="password" placeholder="Enter your password" {...field} />
+                <Input type="password" placeholder="Enter your password" {...field} className="bg-white" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -109,24 +112,37 @@ const LoginForm = () => {
           name="verificationSlider"
           render={({ field: { value, onChange } }) => (
             <FormItem>
-              <FormLabel>Verify Human</FormLabel>
+              <FormLabel className="flex items-center gap-2">
+                <AlertCircle className="w-4 h-4" /> Verify Human
+              </FormLabel>
               <FormControl>
-                <Slider
-                  max={100}
-                  step={1}
-                  value={[value]}
-                  onValueChange={([newValue]) => onChange(newValue)}
-                  className="py-4"
-                />
+                <div className="flex items-center gap-4">
+                  <Slider
+                    max={100}
+                    step={1}
+                    value={[value]}
+                    onValueChange={([newValue]) => onChange(newValue)}
+                    className="py-4"
+                  />
+                  <span className="text-sm text-gray-600 min-w-[3rem]">{value}%</span>
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <div className="space-y-4">
+        <div className="space-y-4 pt-2">
           <Button type="submit" className="w-full" disabled={isLoading}>
             {isLoading ? "Loading..." : "Login"}
           </Button>
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-white px-2 text-gray-500">Or continue with</span>
+            </div>
+          </div>
           <Button
             type="button"
             variant="outline"

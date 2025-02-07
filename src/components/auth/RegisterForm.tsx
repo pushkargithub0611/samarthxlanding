@@ -10,6 +10,7 @@ import { useState } from "react";
 import { Slider } from "@/components/ui/slider";
 import { supabase } from "@/lib/supabase";
 import { useToast } from "@/components/ui/use-toast";
+import { User, Phone, Mail, Lock, UserPlus, AlertCircle } from "lucide-react";
 
 const formSchema = z.object({
   fullName: z.string().min(2, "Full name must be at least 2 characters"),
@@ -45,7 +46,6 @@ const RegisterForm = () => {
     try {
       setIsLoading(true);
       
-      // Create the user in Supabase
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: values.email,
         password: values.password,
@@ -60,8 +60,6 @@ const RegisterForm = () => {
 
       if (authError) throw authError;
 
-      // Send verification SMS using Twilio (this would require a Supabase Edge Function)
-      // For now, we'll just show a success message
       toast({
         title: "Registration Successful",
         description: "Please check your email for verification link",
@@ -86,9 +84,11 @@ const RegisterForm = () => {
           name="fullName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Full Name</FormLabel>
+              <FormLabel className="flex items-center gap-2">
+                <User className="w-4 h-4" /> Full Name
+              </FormLabel>
               <FormControl>
-                <Input placeholder="Enter your full name" {...field} />
+                <Input placeholder="Enter your full name" {...field} className="bg-white" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -99,48 +99,58 @@ const RegisterForm = () => {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel className="flex items-center gap-2">
+                <Mail className="w-4 h-4" /> Email
+              </FormLabel>
               <FormControl>
-                <Input placeholder="Enter your email" {...field} />
+                <Input placeholder="Enter your email" {...field} className="bg-white" />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <Input type="password" placeholder="Create a password" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="confirmPassword"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Confirm Password</FormLabel>
-              <FormControl>
-                <Input type="password" placeholder="Confirm your password" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="grid gap-4 sm:grid-cols-2">
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="flex items-center gap-2">
+                  <Lock className="w-4 h-4" /> Password
+                </FormLabel>
+                <FormControl>
+                  <Input type="password" placeholder="Create a password" {...field} className="bg-white" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="confirmPassword"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="flex items-center gap-2">
+                  <Lock className="w-4 h-4" /> Confirm Password
+                </FormLabel>
+                <FormControl>
+                  <Input type="password" placeholder="Confirm your password" {...field} className="bg-white" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
         <FormField
           control={form.control}
           name="phone"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Phone Number</FormLabel>
+              <FormLabel className="flex items-center gap-2">
+                <Phone className="w-4 h-4" /> Phone Number
+              </FormLabel>
               <FormControl>
-                <Input placeholder="Enter your phone number" {...field} />
+                <Input placeholder="Enter your phone number" {...field} className="bg-white" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -151,10 +161,12 @@ const RegisterForm = () => {
           name="role"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Role</FormLabel>
+              <FormLabel className="flex items-center gap-2">
+                <UserPlus className="w-4 h-4" /> Role
+              </FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger>
+                  <SelectTrigger className="bg-white">
                     <SelectValue placeholder="Select your role" />
                   </SelectTrigger>
                 </FormControl>
@@ -173,15 +185,20 @@ const RegisterForm = () => {
           name="verificationSlider"
           render={({ field: { value, onChange } }) => (
             <FormItem>
-              <FormLabel>Verify Human</FormLabel>
+              <FormLabel className="flex items-center gap-2">
+                <AlertCircle className="w-4 h-4" /> Verify Human
+              </FormLabel>
               <FormControl>
-                <Slider
-                  max={100}
-                  step={1}
-                  value={[value]}
-                  onValueChange={([newValue]) => onChange(newValue)}
-                  className="py-4"
-                />
+                <div className="flex items-center gap-4">
+                  <Slider
+                    max={100}
+                    step={1}
+                    value={[value]}
+                    onValueChange={([newValue]) => onChange(newValue)}
+                    className="py-4"
+                  />
+                  <span className="text-sm text-gray-600 min-w-[3rem]">{value}%</span>
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
