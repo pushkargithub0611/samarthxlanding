@@ -13,18 +13,16 @@ const Navigation = () => {
   const { toast } = useToast();
   const [session, setSession] = useState<any>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
     // Get initial session
     supabase.auth.getSession().then(({ data: { session: currentSession } }) => {
       setSession(currentSession);
+      setIsInitialized(true);
       // Only redirect if not on auth page and user is not logged in
       if (!currentSession && location.pathname !== '/auth') {
         navigate('/auth');
-      }
-      // Redirect to home if logged in and on auth page
-      if (currentSession && location.pathname === '/auth') {
-        navigate('/');
       }
     });
 
@@ -40,9 +38,6 @@ const Navigation = () => {
         if (location.pathname !== '/auth') {
           navigate('/auth');
         }
-      } else if (location.pathname === '/auth') {
-        // Redirect to home if logged in and on auth page
-        navigate('/');
       }
     });
 
@@ -70,6 +65,11 @@ const Navigation = () => {
   };
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+  // Show nothing until we've checked the initial session
+  if (!isInitialized) {
+    return null;
+  }
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-lg border-b border-border">
