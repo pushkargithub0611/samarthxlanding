@@ -1,7 +1,8 @@
 
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+// Replace these with your actual Supabase URL and anon key from the Supabase dashboard
+const supabaseUrl = 'https://your-project-url.supabase.co';
+const supabaseAnonKey = 'your-anon-key';
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
