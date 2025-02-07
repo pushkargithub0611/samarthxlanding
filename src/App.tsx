@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Communication from "./pages/Communication";
 import Documents from "./pages/Documents";
 import Auth from "./pages/Auth";
+import SchoolRegistration from "./pages/SchoolRegistration";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +29,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
+          <Route path="/school-registration" element={<SchoolRegistration />} />
           <Route path="/communication" element={<Communication />} />
           <Route path="/documents" element={<Documents />} />
           <Route path="/students" element={<ModulePage title="Student Management" />} />

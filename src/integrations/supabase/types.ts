@@ -9,7 +9,144 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      schools: {
+        Row: {
+          address: string
+          administration_type: string
+          affiliation_board: Database["public"]["Enums"]["affiliation_board"]
+          affiliation_number: string
+          created_at: string | null
+          district: string
+          email: string
+          gram_panchayat: string | null
+          has_pre_primary: boolean | null
+          highest_class: number
+          hos_email: string
+          hos_mobile: string
+          hos_name: string
+          hos_type: Database["public"]["Enums"]["hos_type"]
+          id: string
+          landline_number: string | null
+          location_type: Database["public"]["Enums"]["school_location_type"]
+          lowest_class: number
+          management_code: string
+          management_group: Database["public"]["Enums"]["management_group"]
+          mobile_number: string
+          nodal_ministry: string | null
+          pin_code: string
+          pre_primary_classes: number | null
+          respondent_email: string
+          respondent_mobile: string
+          respondent_name: string
+          respondent_type: Database["public"]["Enums"]["respondent_type"]
+          revenue_block: string | null
+          school_category_code: string
+          school_name: string
+          school_type: Database["public"]["Enums"]["school_type"]
+          state_board_name: string | null
+          std_code: string | null
+          streams_available: string[] | null
+          udise_block: string
+          udise_code: string
+          updated_at: string | null
+          urban_local_body: string | null
+          user_id: string | null
+          village_name: string | null
+          ward_name: string | null
+          website: string | null
+        }
+        Insert: {
+          address: string
+          administration_type: string
+          affiliation_board: Database["public"]["Enums"]["affiliation_board"]
+          affiliation_number: string
+          created_at?: string | null
+          district: string
+          email: string
+          gram_panchayat?: string | null
+          has_pre_primary?: boolean | null
+          highest_class: number
+          hos_email: string
+          hos_mobile: string
+          hos_name: string
+          hos_type: Database["public"]["Enums"]["hos_type"]
+          id?: string
+          landline_number?: string | null
+          location_type: Database["public"]["Enums"]["school_location_type"]
+          lowest_class: number
+          management_code: string
+          management_group: Database["public"]["Enums"]["management_group"]
+          mobile_number: string
+          nodal_ministry?: string | null
+          pin_code: string
+          pre_primary_classes?: number | null
+          respondent_email: string
+          respondent_mobile: string
+          respondent_name: string
+          respondent_type: Database["public"]["Enums"]["respondent_type"]
+          revenue_block?: string | null
+          school_category_code: string
+          school_name: string
+          school_type: Database["public"]["Enums"]["school_type"]
+          state_board_name?: string | null
+          std_code?: string | null
+          streams_available?: string[] | null
+          udise_block: string
+          udise_code: string
+          updated_at?: string | null
+          urban_local_body?: string | null
+          user_id?: string | null
+          village_name?: string | null
+          ward_name?: string | null
+          website?: string | null
+        }
+        Update: {
+          address?: string
+          administration_type?: string
+          affiliation_board?: Database["public"]["Enums"]["affiliation_board"]
+          affiliation_number?: string
+          created_at?: string | null
+          district?: string
+          email?: string
+          gram_panchayat?: string | null
+          has_pre_primary?: boolean | null
+          highest_class?: number
+          hos_email?: string
+          hos_mobile?: string
+          hos_name?: string
+          hos_type?: Database["public"]["Enums"]["hos_type"]
+          id?: string
+          landline_number?: string | null
+          location_type?: Database["public"]["Enums"]["school_location_type"]
+          lowest_class?: number
+          management_code?: string
+          management_group?: Database["public"]["Enums"]["management_group"]
+          mobile_number?: string
+          nodal_ministry?: string | null
+          pin_code?: string
+          pre_primary_classes?: number | null
+          respondent_email?: string
+          respondent_mobile?: string
+          respondent_name?: string
+          respondent_type?: Database["public"]["Enums"]["respondent_type"]
+          revenue_block?: string | null
+          school_category_code?: string
+          school_name?: string
+          school_type?: Database["public"]["Enums"]["school_type"]
+          state_board_name?: string | null
+          std_code?: string | null
+          streams_available?: string[] | null
+          udise_block?: string
+          udise_code?: string
+          updated_at?: string | null
+          urban_local_body?: string | null
+          user_id?: string | null
+          village_name?: string | null
+          ward_name?: string | null
+          website?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -18,7 +155,36 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      affiliation_board:
+        | "CBSE"
+        | "STATE_BOARD"
+        | "ICSE"
+        | "INTERNATIONAL_BOARD"
+        | "BOTH_CBSE_STATE"
+        | "MADARSA_BOARD"
+        | "SANSKRIT_BOARD"
+        | "MSRVSSB"
+      hos_type:
+        | "HEAD_MASTER"
+        | "ASST_HEAD_MASTER"
+        | "ACTING_HEAD_TEACHER"
+        | "IN_CHARGE_OTHER_SCHOOL"
+        | "IN_CHARGE_BLOCK_DISTRICT"
+        | "OTHERS"
+      management_group:
+        | "STATE_GOVT"
+        | "GOVT_AIDED"
+        | "PRIVATE_UNAIDED"
+        | "CENTRAL_GOVT"
+        | "OTHERS"
+      respondent_type:
+        | "HEAD_OF_SCHOOL"
+        | "TEACHER"
+        | "ADMIN_STAFF"
+        | "IN_CHARGE_BLOCK"
+        | "IN_CHARGE_OTHER_SCHOOL"
+      school_location_type: "RURAL" | "URBAN"
+      school_type: "BOYS" | "GIRLS" | "CO_EDUCATIONAL"
     }
     CompositeTypes: {
       [_ in never]: never
