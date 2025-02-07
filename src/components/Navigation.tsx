@@ -30,18 +30,21 @@ const Navigation = () => {
 
   const handleLogout = async () => {
     try {
-      const { error } = await supabase.auth.signOut();
-      if (error) throw error;
+      await supabase.auth.signOut();
+      setSession(null); // Always clear local session
       toast({
         title: "Logged out successfully",
       });
-      navigate('/');
     } catch (error: any) {
+      console.error("Logout error:", error);
+      // Still clear local session even if server logout fails
+      setSession(null);
       toast({
-        variant: "destructive",
-        title: "Error",
-        description: error.message,
+        title: "Logged out successfully",
+        description: "Your local session has been cleared",
       });
+    } finally {
+      navigate('/');
     }
   };
 
