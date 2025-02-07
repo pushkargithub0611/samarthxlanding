@@ -23,33 +23,33 @@ const Navigation = () => {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
+      if (!session && window.location.pathname !== '/auth') {
+        navigate('/');
+      }
     });
 
     return () => subscription.unsubscribe();
-  }, []);
+  }, [navigate]);
 
   const handleLogout = async () => {
-    if (!session) {
-      console.log("No active session found");
-      navigate('/');
-      return;
-    }
-
     try {
-      await supabase.auth.signOut();
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      
       setSession(null);
       toast({
         title: "Logged out successfully",
       });
+      navigate('/');
     } catch (error: any) {
       console.error("Logout error:", error);
-      // Still clear local session even if server logout fails
+      // Force clear session and redirect even if server logout fails
       setSession(null);
+      await supabase.auth.signOut({ scope: 'local' });
       toast({
-        title: "Logged out successfully",
+        title: "Logged out",
         description: "Your local session has been cleared",
       });
-    } finally {
       navigate('/');
     }
   };
