@@ -10,10 +10,18 @@ import Documents from "./pages/Documents";
 import Auth from "./pages/Auth";
 import SchoolRegistration from "./pages/SchoolRegistration";
 import Schools from "./pages/Schools";
+import { EducationalVideos } from "./components/academics/EducationalVideos";
 
 const queryClient = new QueryClient();
 
-// Placeholder components for module routes
+const AcademicsPage = () => (
+  <div className="container mx-auto py-8 px-4">
+    <h1 className="text-2xl font-bold mb-6">Academic Resources</h1>
+    <EducationalVideos />
+  </div>
+);
+
+// Placeholder components for other module routes
 const ModulePage = ({ title }: { title: string }) => (
   <div className="p-8">
     <h1 className="text-2xl font-bold mb-4">{title} Module</h1>
@@ -36,7 +44,7 @@ const App = () => (
           <Route path="/documents" element={<Documents />} />
           <Route path="/students" element={<ModulePage title="Student Management" />} />
           <Route path="/teachers" element={<ModulePage title="Teacher Management" />} />
-          <Route path="/academics" element={<ModulePage title="Academic Management" />} />
+          <Route path="/academics" element={<AcademicsPage />} />
           <Route path="/incentives" element={<ModulePage title="Incentives & Scholarships" />} />
           <Route path="/admin" element={<ModulePage title="Administrative Tools" />} />
           <Route path="*" element={<Navigate to="/" replace />} />
