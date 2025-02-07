@@ -5,10 +5,28 @@ import Logo from "./Logo";
 import { BookOpen, Award, IndianRupee, User, FileText } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { useToast } from "./ui/use-toast";
+import { useEffect, useState } from "react";
 
 const Navigation = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [session, setSession] = useState<any>(null);
+
+  useEffect(() => {
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+
+    // Listen for auth changes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -58,22 +76,33 @@ const Navigation = () => {
         </div>
 
         <div className="flex items-center space-x-4">
-          <Link to="/auth">
-            <Button variant="ghost">
-              Login
-            </Button>
-          </Link>
-          <Button onClick={handleLogout} variant="ghost">
-            Logout
-          </Button>
-          <Link to="/school-registration">
-            <Button className="bg-accent hover:bg-blue-500 text-white">
-              Register School
-            </Button>
-          </Link>
-          <Button className="bg-accent hover:bg-blue-500 text-white">
-            Get Demo
-          </Button>
+          {session ? (
+            <>
+              <div className="flex items-center gap-2">
+                <User className="w-4 h-4" />
+                <span className="text-sm text-secondary">{session.user.email}</span>
+              </div>
+              <Button onClick={handleLogout} variant="ghost">
+                Logout
+              </Button>
+              <Link to="/school-registration">
+                <Button className="bg-accent hover:bg-blue-500 text-white">
+                  Register School
+                </Button>
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link to="/auth">
+                <Button variant="ghost">
+                  Login
+                </Button>
+              </Link>
+              <Button className="bg-accent hover:bg-blue-500 text-white">
+                Get Demo
+              </Button>
+            </>
+          )}
         </div>
       </div>
     </nav>
