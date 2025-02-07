@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -21,7 +22,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative py-20 px-4 md:px-6 lg:px-8 bg-gradient-to-b from-blue-50 to-white">
+    <section className="relative pt-32 pb-20 px-4 md:px-6 lg:px-8 bg-gradient-to-b from-blue-50 to-white">
       <div className="max-w-7xl mx-auto">
         <div className="text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
