@@ -66,6 +66,11 @@ const Navigation = () => {
           <Button onClick={handleLogout} variant="ghost">
             Logout
           </Button>
+          <Link to="/school-registration">
+            <Button className="bg-accent hover:bg-blue-500 text-white">
+              Register School
+            </Button>
+          </Link>
           <Button className="bg-accent hover:bg-blue-500 text-white">
             Get Demo
           </Button>
