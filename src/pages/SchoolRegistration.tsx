@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Progress } from "@/components/ui/progress";
 import { Card } from "@/components/ui/card";
@@ -7,10 +8,11 @@ import ContactForm from "@/components/school-registration/ContactForm";
 import ManagementForm from "@/components/school-registration/ManagementForm";
 import AcademicForm from "@/components/school-registration/AcademicForm";
 import RespondentForm from "@/components/school-registration/RespondentForm";
+import CongratsDialog from "@/components/school-registration/CongratsDialog";
 import { SchoolFormData } from "@/types/school";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from "@/lib/supabase";
 import Logo from "@/components/Logo";
 import { School, ArrowRight, ArrowLeft } from "lucide-react";
 
@@ -37,6 +39,7 @@ const STEP_DESCRIPTIONS = [
 const SchoolRegistration = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<Partial<SchoolFormData>>({});
+  const [showCongrats, setShowCongrats] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -91,7 +94,7 @@ const SchoolRegistration = () => {
       const schoolData = {
         ...formData,
         user_id: user.id
-      } as SchoolFormData; // Type assertion since we validated required fields
+      } as SchoolFormData;
 
       const { error } = await supabase
         .from('schools')
@@ -99,11 +102,7 @@ const SchoolRegistration = () => {
 
       if (error) throw error;
 
-      toast({
-        title: "Success",
-        description: "School registered successfully"
-      });
-      navigate("/");
+      setShowCongrats(true);
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -186,6 +185,14 @@ const SchoolRegistration = () => {
             />
           )}
         </Card>
+
+        <CongratsDialog 
+          isOpen={showCongrats} 
+          onClose={() => {
+            setShowCongrats(false);
+            navigate("/");
+          }} 
+        />
       </div>
     </div>
   );
