@@ -29,9 +29,15 @@ const Navigation = () => {
   }, []);
 
   const handleLogout = async () => {
+    if (!session) {
+      console.log("No active session found");
+      navigate('/');
+      return;
+    }
+
     try {
       await supabase.auth.signOut();
-      setSession(null); // Always clear local session
+      setSession(null);
       toast({
         title: "Logged out successfully",
       });
@@ -83,7 +89,7 @@ const Navigation = () => {
             <>
               <div className="flex items-center gap-2">
                 <User className="w-4 h-4" />
-                <span className="text-sm text-secondary">{session.user.email}</span>
+                <span className="text-sm text-secondary">{session?.user?.email}</span>
               </div>
               <Button onClick={handleLogout} variant="ghost">
                 Logout
