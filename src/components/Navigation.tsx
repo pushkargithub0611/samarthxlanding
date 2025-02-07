@@ -1,5 +1,6 @@
+
 import { Button } from "./ui/button";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Logo from "./Logo";
 import { BookOpen, Award, User, FileText, School, Menu, X } from "lucide-react";
 import { supabase } from "@/lib/supabase";
@@ -8,6 +9,7 @@ import { useEffect, useState } from "react";
 
 const Navigation = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { toast } = useToast();
   const [session, setSession] = useState<any>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,8 +18,13 @@ const Navigation = () => {
     // Get initial session
     supabase.auth.getSession().then(({ data: { session: currentSession } }) => {
       setSession(currentSession);
-      if (!currentSession && window.location.pathname !== '/auth') {
+      // Only redirect if not on auth page and user is not logged in
+      if (!currentSession && location.pathname !== '/auth') {
         navigate('/auth');
+      }
+      // Redirect to home if logged in and on auth page
+      if (currentSession && location.pathname === '/auth') {
+        navigate('/');
       }
     });
 
@@ -30,20 +37,23 @@ const Navigation = () => {
       if (!currentSession) {
         // Clear any local state
         setSession(null);
-        if (window.location.pathname !== '/auth') {
+        if (location.pathname !== '/auth') {
           navigate('/auth');
         }
+      } else if (location.pathname === '/auth') {
+        // Redirect to home if logged in and on auth page
+        navigate('/');
       }
     });
 
     return () => {
       subscription.unsubscribe();
     };
-  }, [navigate]);
+  }, [navigate, location.pathname]);
 
   const handleLogout = async () => {
     try {
-      await supabase.auth.signOut({ scope: 'local' });
+      await supabase.auth.signOut();
       setSession(null);
       toast({
         title: "Logged out successfully",
