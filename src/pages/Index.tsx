@@ -6,6 +6,7 @@ import FeaturesSection from "@/components/sections/FeaturesSection";
 import UDISESection from "@/components/sections/UDISESection";
 import CTASection from "@/components/sections/CTASection";
 import DashboardSection from "@/components/sections/DashboardSection";
+import AccessibilityControls from "@/components/accessibility/AccessibilityControls";
 
 export default function Index() {
   return (
@@ -21,6 +22,7 @@ export default function Index() {
         </main>
         <Footer />
       </div>
+      <AccessibilityControls />
     </>
   );
 }
