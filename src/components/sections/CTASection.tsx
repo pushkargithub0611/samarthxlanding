@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -40,7 +41,7 @@ const CTASection = () => {
           <Button 
             size="lg" 
             variant="outline" 
-            className="border-white text-white hover:bg-blue-600"
+            className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-blue-600"
             onClick={handleContactSales}
           >
             Contact Sales
