@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import Logo from "./Logo";
 import { School, Mail, Phone, MapPin } from "lucide-react";
@@ -18,7 +19,12 @@ const Footer = () => {
     },
     {
       title: "Quick Links",
-      links: ["Ministry of Education", "UDISE+", "School Login", "Contact"],
+      links: [
+        { name: "Ministry of Education", url: "https://www.education.gov.in/" },
+        { name: "UDISE+", url: "https://udiseplus.gov.in/#/en/home" },
+        { name: "School Login", url: "/login" },
+        { name: "Contact", url: "/contact" }
+      ],
     },
   ];
 
@@ -52,13 +58,24 @@ const Footer = () => {
               <h3 className="font-semibold mb-4">{section.title}</h3>
               <ul className="space-y-2">
                 {section.links.map((link) => (
-                  <li key={link}>
-                    <Link
-                      to={`/${link.toLowerCase().replace(/\s+/g, '-')}`}
-                      className="text-white/70 hover:text-white transition-colors"
-                    >
-                      {link}
-                    </Link>
+                  <li key={typeof link === 'string' ? link : link.name}>
+                    {typeof link === 'string' ? (
+                      <Link
+                        to={`/${link.toLowerCase().replace(/\s+/g, '-')}`}
+                        className="text-white/70 hover:text-white transition-colors"
+                      >
+                        {link}
+                      </Link>
+                    ) : (
+                      <a
+                        href={link.url}
+                        target={link.url.startsWith('http') ? "_blank" : undefined}
+                        rel={link.url.startsWith('http') ? "noopener noreferrer" : undefined}
+                        className="text-white/70 hover:text-white transition-colors"
+                      >
+                        {link.name}
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>
