@@ -48,12 +48,35 @@ const SchoolRegistration = () => {
         return;
       }
 
-      const { error } = await supabase.from('schools').insert([
-        {
-          ...formData,
-          user_id: user.id
-        }
-      ]);
+      // Validate required fields before submission
+      const requiredFields: Array<keyof SchoolFormData> = [
+        'udise_code', 'school_name', 'district', 'udise_block', 'location_type', 
+        'address', 'pin_code', 'mobile_number', 'email', 'hos_type', 'hos_name',
+        'hos_mobile', 'hos_email', 'management_group', 'management_code',
+        'administration_type', 'school_category_code', 'lowest_class',
+        'highest_class', 'school_type', 'affiliation_board', 'affiliation_number',
+        'respondent_type', 'respondent_name', 'respondent_mobile', 'respondent_email'
+      ];
+
+      const missingFields = requiredFields.filter(field => !formData[field]);
+      
+      if (missingFields.length > 0) {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: `Missing required fields: ${missingFields.join(', ')}`
+        });
+        return;
+      }
+
+      const schoolData = {
+        ...formData,
+        user_id: user.id
+      } as SchoolFormData; // Type assertion since we validated required fields
+
+      const { error } = await supabase
+        .from('schools')
+        .insert(schoolData);
 
       if (error) throw error;
 
