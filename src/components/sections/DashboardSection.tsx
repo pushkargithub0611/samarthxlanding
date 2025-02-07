@@ -1,7 +1,6 @@
 
 import { SchoolInfrastructureStats } from "@/components/dashboard/SchoolInfrastructureStats";
 import { InfrastructureChart } from "@/components/dashboard/InfrastructureChart";
-import { SchoolTypeDistribution } from "@/components/dashboard/SchoolTypeDistribution";
 
 const DashboardSection = () => {
   return (
@@ -19,13 +18,8 @@ const DashboardSection = () => {
         <div className="space-y-8">
           <SchoolInfrastructureStats />
           
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2">
-              <InfrastructureChart />
-            </div>
-            <div>
-              <SchoolTypeDistribution />
-            </div>
+          <div className="lg:col-span-2">
+            <InfrastructureChart />
           </div>
         </div>
       </div>
