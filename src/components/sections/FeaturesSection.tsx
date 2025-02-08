@@ -46,7 +46,7 @@ const features = [
     icon: MessagesSquare,
     title: "Communication Hub",
     description: "Mass messaging, helpdesk, and stakeholder engagement",
-    path: "/communication"
+    path: "https://samarthx.du.ac.in/signin"
   }
 ];
 
@@ -55,12 +55,21 @@ const FeaturesSection = () => {
   const { toast } = useToast();
 
   const handleFeatureClick = (path: string, title: string) => {
-    toast({
-      title: "Module Access",
-      description: `Accessing ${title} module...`,
-      duration: 2000,
-    });
-    navigate(path);
+    if (path.startsWith('http')) {
+      toast({
+        title: "Redirecting",
+        description: `Opening ${title} in a new tab...`,
+        duration: 2000,
+      });
+      window.open(path, '_blank', 'noopener,noreferrer');
+    } else {
+      toast({
+        title: "Module Access",
+        description: `Accessing ${title} module...`,
+        duration: 2000,
+      });
+      navigate(path);
+    }
   };
 
   return (
@@ -89,3 +98,4 @@ const FeaturesSection = () => {
 };
 
 export default FeaturesSection;
+
