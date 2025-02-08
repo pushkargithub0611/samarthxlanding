@@ -69,18 +69,18 @@ const Navigation = () => {
       role="navigation"
       aria-label="Main navigation"
     >
-      <div className="max-w-[1600px] mx-auto px-6 sm:px-8 h-20">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 h-20">
         <div className="flex items-center justify-between h-full">
-          <div className="flex items-center space-x-12">
-            <Link to="/" className="flex items-center" aria-label="Go to homepage">
+          <div className="flex items-center space-x-8 lg:space-x-12">
+            <Link to="/" className="flex items-center shrink-0" aria-label="Go to homepage">
               <Logo />
             </Link>
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
               <AboutUsTooltip />
               <NavLinks session={session} />
             </div>
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 lg:space-x-6">
             <button
               onClick={toggleMenu}
               className="md:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100"
@@ -95,7 +95,7 @@ const Navigation = () => {
               )}
             </button>
 
-            <div className="hidden md:flex items-center space-x-4">
+            <div className="hidden md:flex items-center space-x-4 lg:space-x-6">
               <AuthButtons session={session} onLogout={handleLogout} />
             </div>
           </div>
@@ -113,3 +113,4 @@ const Navigation = () => {
 };
 
 export default Navigation;
+
