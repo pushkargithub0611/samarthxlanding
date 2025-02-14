@@ -1,3 +1,4 @@
+
 import { ResponsiveChoropleth } from '@nivo/geo';
 import { Card } from '@/components/ui/card';
 import { MapTooltip } from './MapTooltip';

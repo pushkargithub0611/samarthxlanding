@@ -1,3 +1,4 @@
+
 import type { ChoroplethBoundFeature } from '@nivo/geo';
 
 export interface SchoolStats {

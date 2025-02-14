@@ -1,3 +1,4 @@
+
 import { School, GraduationCap } from 'lucide-react';
 import type { CustomFeature } from '@/types/dashboard';
 
