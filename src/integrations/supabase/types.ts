@@ -9,6 +9,71 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      profiles: {
+        Row: {
+          created_at: string
+          full_name: string
+          id: string
+          role: Database["public"]["Enums"]["user_role"]
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          full_name: string
+          id: string
+          role?: Database["public"]["Enums"]["user_role"]
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          full_name?: string
+          id?: string
+          role?: Database["public"]["Enums"]["user_role"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      school_members: {
+        Row: {
+          class_id: string | null
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["user_role"]
+          school_id: string | null
+          section: string | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          class_id?: string | null
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["user_role"]
+          school_id?: string | null
+          section?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          class_id?: string | null
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["user_role"]
+          school_id?: string | null
+          section?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "school_members_school_id_fkey"
+            columns: ["school_id"]
+            isOneToOne: false
+            referencedRelation: "schools"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       schools: {
         Row: {
           address: string
@@ -16,6 +81,7 @@ export type Database = {
           affiliation_board: Database["public"]["Enums"]["affiliation_board"]
           affiliation_number: string
           created_at: string | null
+          created_by: string | null
           district: string
           email: string
           gram_panchayat: string | null
@@ -26,6 +92,7 @@ export type Database = {
           hos_name: string
           hos_type: Database["public"]["Enums"]["hos_type"]
           id: string
+          is_active: boolean | null
           landline_number: string | null
           location_type: Database["public"]["Enums"]["school_location_type"]
           lowest_class: number
@@ -61,6 +128,7 @@ export type Database = {
           affiliation_board: Database["public"]["Enums"]["affiliation_board"]
           affiliation_number: string
           created_at?: string | null
+          created_by?: string | null
           district: string
           email: string
           gram_panchayat?: string | null
@@ -71,6 +139,7 @@ export type Database = {
           hos_name: string
           hos_type: Database["public"]["Enums"]["hos_type"]
           id?: string
+          is_active?: boolean | null
           landline_number?: string | null
           location_type: Database["public"]["Enums"]["school_location_type"]
           lowest_class: number
@@ -106,6 +175,7 @@ export type Database = {
           affiliation_board?: Database["public"]["Enums"]["affiliation_board"]
           affiliation_number?: string
           created_at?: string | null
+          created_by?: string | null
           district?: string
           email?: string
           gram_panchayat?: string | null
@@ -116,6 +186,7 @@ export type Database = {
           hos_name?: string
           hos_type?: Database["public"]["Enums"]["hos_type"]
           id?: string
+          is_active?: boolean | null
           landline_number?: string | null
           location_type?: Database["public"]["Enums"]["school_location_type"]
           lowest_class?: number
@@ -146,6 +217,53 @@ export type Database = {
           website?: string | null
         }
         Relationships: []
+      }
+      student_performance: {
+        Row: {
+          created_at: string
+          exam_date: string
+          exam_type: string
+          id: string
+          marks: number
+          max_marks: number
+          school_id: string | null
+          student_id: string | null
+          subject: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          exam_date: string
+          exam_type: string
+          id?: string
+          marks: number
+          max_marks: number
+          school_id?: string | null
+          student_id?: string | null
+          subject: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          exam_date?: string
+          exam_type?: string
+          id?: string
+          marks?: number
+          max_marks?: number
+          school_id?: string | null
+          student_id?: string | null
+          subject?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "student_performance_school_id_fkey"
+            columns: ["school_id"]
+            isOneToOne: false
+            referencedRelation: "schools"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
@@ -185,6 +303,7 @@ export type Database = {
         | "IN_CHARGE_OTHER_SCHOOL"
       school_location_type: "RURAL" | "URBAN"
       school_type: "BOYS" | "GIRLS" | "CO_EDUCATIONAL"
+      user_role: "super_admin" | "school_admin" | "teacher" | "student"
     }
     CompositeTypes: {
       [_ in never]: never

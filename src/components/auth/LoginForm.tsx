@@ -11,6 +11,7 @@ import { supabase } from "@/lib/supabase";
 import { useToast } from "@/components/ui/use-toast";
 import { Github, Mail, Lock, AlertCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import type { UserRole } from "@/types/auth";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -32,10 +33,33 @@ const LoginForm = () => {
     },
   });
 
+  const redirectToDashboard = async (userId: string) => {
+    try {
+      const { data: profile, error } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', userId)
+        .single();
+
+      if (error) throw error;
+
+      const role = profile?.role as UserRole;
+      const dashboardRoute = role === 'super_admin' ? '/admin'
+        : role === 'school_admin' ? '/school-dashboard'
+        : role === 'teacher' ? '/teacher-dashboard'
+        : '/student-dashboard';
+
+      navigate(dashboardRoute);
+    } catch (error: any) {
+      console.error('Error fetching user role:', error);
+      navigate('/'); // Fallback to home page if there's an error
+    }
+  };
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setIsLoading(true);
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email: values.email,
         password: values.password,
       });
@@ -47,7 +71,9 @@ const LoginForm = () => {
         description: "You have been logged in successfully",
       });
       
-      navigate("/"); // Changed from /school-registration to /
+      if (data.user) {
+        await redirectToDashboard(data.user.id);
+      }
     } catch (error: any) {
       toast({
         variant: "destructive",
