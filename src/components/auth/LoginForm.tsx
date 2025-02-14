@@ -47,7 +47,7 @@ const LoginForm = () => {
         description: "You have been logged in successfully",
       });
       
-      navigate("/school-registration");
+      navigate("/"); // Changed from /school-registration to /
     } catch (error: any) {
       toast({
         variant: "destructive",
